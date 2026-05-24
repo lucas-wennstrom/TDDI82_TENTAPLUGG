@@ -1,9 +1,6 @@
 #include <vector>
 #include <list>
 #include <iostream>
-#include <cctype>
-#include <iterator>
-#include <algorithm>
 
 /// Implementera sum_and_max() och print_pair()
 template <typename it>
