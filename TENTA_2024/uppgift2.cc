@@ -23,13 +23,14 @@ int main()
        if(ss >> name) //om det finns något på raden så är det namnet först, då läser denna in namnet annars failar den
        {
            people.push_back(name);
+           for_each(std::istream_iterator<std::string>{ss}, //bara filmerna ska läsas in till mappen
+               std::istream_iterator<std::string>{},
+               [&movies](std::string const& movie)
+            {
+                movies[movie]++;
+            });
        }
-       for_each(std::istream_iterator<std::string>{ss}, //bara filmerna ska läsas in till mappen
-           std::istream_iterator<std::string>{},
-           [&movies](std::string const& movie)
-        {
-            movies[movie]++;
-        });
+
     }
 
     std::cout << std::endl;
