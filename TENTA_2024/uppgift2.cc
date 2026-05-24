@@ -3,13 +3,13 @@
 #include <sstream>
 #include <map>
 #include <string>
-#include <vector>
+#include <set>
 #include <algorithm>
 
 int main()
 {
     std::map<std::string, int> movies;
-    std::vector<std::string> people;
+    std::map<std::string, std::set<std::string>> people;
     std::string line;
 
     std::cout << "On each line, enter a person's name followed by their movie preferences." << std::endl;
@@ -18,16 +18,22 @@ int main()
     while(std::getline(std::cin, line)) //while stämmer medans input e igång alltså tills CTRL-D trycks
     {
        std::string name;
+
        std::istringstream ss{line};
 
        if(ss >> name) //om det finns något på raden så är det namnet först, då läser denna in namnet annars failar den
        {
-           people.push_back(name);
            for_each(std::istream_iterator<std::string>{ss}, //bara filmerna ska läsas in till mappen
                std::istream_iterator<std::string>{},
-               [&movies](std::string const& movie)
+               [&movies, &name, &people](std::string const& movie)
             {
-                movies[movie]++;
+                if(people[name].insert(movie).second == 1)  // skit skumt, facit lösning kanske är bättre tyckte den va skum också, people[name].insert(movie)
+                                                           // returnerar ett pair, std::strig och std::set, om second i pair == 1 är det unikt annars är de inte det,
+                                                          // detta gör så en person kan skriva in samma film men de räknas bara som en film
+                                                         // Det har och göra med att set returnerar en 1 efter insert om det inte fanns något annars retuernar den en 0 för det redan finns den saken i set
+                {
+                    movies[movie]++;
+                };
             });
        }
 
