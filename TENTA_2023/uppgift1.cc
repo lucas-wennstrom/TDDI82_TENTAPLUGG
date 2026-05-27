@@ -8,9 +8,9 @@
 
 /* Implementera median() hÃ¤r */
 template <typename Container, typename T>
-typename Container::value_type  median(Container const& C , T V)
+typename Container::value_type  median(Container const& C , T const& V)
 {
-  std::vector <typename Container::value_type> tmp{C.begin(), C.end()};
+  Container tmp{C};
   std::sort(tmp.begin(), tmp.end(), V); //V är en lamda funktion vilket gör att den kan användas här för att jämnföra
   return(tmp[tmp.size()/2]);
 }
